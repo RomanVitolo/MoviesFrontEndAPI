@@ -1,4 +1,4 @@
-using SharedLibrary.DTOs;
+using SharedLibrary.DTOS;
 using System;
 using TMPro;
 using UnityEngine;
@@ -36,17 +36,17 @@ namespace ServerSettings
 
         public async void OnGet()
         {
-            var response = await HttpClient.GetId<TestDTO>(_serverEndpoint, int.Parse(_agentIdInput.text));
+            var response = await HttpClient.GetId<ActorDTO>(_serverEndpoint, int.Parse(_agentIdInput.text));
         }
 
         public async void OnPost()
         {
-            var response = await HttpClient.Post<TestDTO>(_serverEndpoint, _agentStat);
+            var response = await HttpClient.Post<ActorDTO>(_serverEndpoint, _agentStat);
         }
 
         public async void OnPut()
         {
-            var response = await HttpClient.Put<TestDTO>(_serverEndpoint, int.Parse(_agentIdInput.text), _agentStat);
+            var response = await HttpClient.Put<ActorDTO>(_serverEndpoint, int.Parse(_agentIdInput.text), _agentStat);
         }
     }
 }
