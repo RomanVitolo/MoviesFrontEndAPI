@@ -1,4 +1,4 @@
-using SharedLibrary.DTOS;
+using SharedLibrary.Interfaces.Entities;
 using System;
 using TMPro;
 using UnityEngine;
@@ -6,47 +6,44 @@ using UnityEngine;
 namespace ServerSettings
 {
     [Serializable]
-    public class AgentStat
+    public class GenreCreation
     {
-        public int Id { get; set; }
-        public int Level { get; set; }
-        public float Health { get; set; }
-
-        public AgentStat(int id, int level, float health)
+        public string Name { get; set; }
+        
+        public GenreCreation(string name)
         {
-            Id = id;
-            Level = level;
-            Health = health;
+            Name = name;
         }
     }
 
     public class GameEngine : MonoBehaviour
     {
         [SerializeField] private TMP_InputField _agentIdInput;
-
-        private AgentStat _agentStat;
-        private readonly string _serverEndpoint = "https://localhost:7140/agent";
-
+        [SerializeField] private string _apiController = "genres";
+        
+        private GenreCreation _genreCreation;
+        
+        private readonly string _serverEndpoint = $"https://localhost:7124/api/";      
 
         private void Awake()
         {
-            _agentStat = new AgentStat(250, 150, 150);
+            _genreCreation = new GenreCreation("Action");
             if (_agentIdInput == null) FindObjectOfType<TMP_InputField>();
         }
 
-        public async void OnGet()
+        public async void OnGetByID()
         {
-            var response = await HttpClient.GetId<ActorDTO>(_serverEndpoint, int.Parse(_agentIdInput.text));
+            //var response = await HttpClient.GetId<ICreateGenreDTO>(string.Concat(_serverEndpoint, _apiController), int.Parse(_agentIdInput.text));
         }
 
         public async void OnPost()
         {
-            var response = await HttpClient.Post<ActorDTO>(_serverEndpoint, _agentStat);
+            var response = await HttpClient.Post<ICreateGenreDTO>(string.Concat(_serverEndpoint, _apiController), _genreCreation);
         }
 
         public async void OnPut()
         {
-            var response = await HttpClient.Put<ActorDTO>(_serverEndpoint, int.Parse(_agentIdInput.text), _agentStat);
+            //var response = await HttpClient.Put<ICreateGenreDTO>(string.Concat(_serverEndpoint, _apiController), int.Parse(_agentIdInput.text), _genreCreation);
         }
     }
 }
