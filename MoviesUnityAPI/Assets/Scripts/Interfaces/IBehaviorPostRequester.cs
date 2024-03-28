@@ -2,7 +2,7 @@
 
 namespace Interfaces
 {
-    public interface IBehaviourPostRequester
+    public interface IBehaviorPostRequester
     {
         public Task CallRequestMethod(object bodyClass);
     }

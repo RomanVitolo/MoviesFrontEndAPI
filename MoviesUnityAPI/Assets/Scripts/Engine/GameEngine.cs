@@ -38,7 +38,7 @@ namespace ServerSettings
             DontDestroyOnLoad(this.gameObject);
         }           
 
-        public string ServerEndpoint { get; private set; } = $"https://localhost:7124/api/";    
+        public string ServerEndpoint { get; set; } = $"https://localhost:7124/api/";  
     }
 }
 

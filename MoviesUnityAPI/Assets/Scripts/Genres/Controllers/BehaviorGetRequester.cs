@@ -5,7 +5,7 @@ using SharedLibrary.Interfaces.Entities;
 
 namespace Genres
 {
-    internal class BehaviourGetRequester : IBehaviourRequesterById
+    internal class BehaviorGetRequester : IBehaviorRequesterById
     {      
         private const string _apiController = "genres";
 

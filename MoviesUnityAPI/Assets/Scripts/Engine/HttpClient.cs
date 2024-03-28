@@ -15,7 +15,7 @@ namespace ServerSettings
         public static async Task<T> Post<T>(string endPoint, object payload) => await SendRequest<T>(endPoint, RequestType.POST, payload);
 
         public static async Task<T> Put<T>(string endPoint, int id, object payload) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.PUT, payload);
-        public static async Task<T> Delete<T>(string endPoint, int id, object payload) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.DELETE, payload);
+        public static async Task<T> Delete<T>(string endPoint, int id) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.DELETE);
 
         private static async Task<T> SendRequest<T>(string path,
             RequestType type = RequestType.GET,

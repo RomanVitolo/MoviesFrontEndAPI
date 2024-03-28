@@ -10,18 +10,18 @@ namespace Genres
         [SerializeField] private TMP_InputField _agentIdInput; 
         
         private Button _button;                   
-        private IBehaviourRequesterById _behaviourRequesterById;
+        private IBehaviorRequesterById _behaviorRequesterById;
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _behaviourRequesterById = new BehaviourGetRequester();
+            _behaviorRequesterById = new BehaviorGetRequester();
             if (_agentIdInput == null) FindObjectOfType<TMP_InputField>();     
             _button.onClick.AddListener(SendRequest);   
         }              
         private void SendRequest()
         {     
             Debug.Log("Do Something");
-            _behaviourRequesterById.CallRequestMethodById(_agentIdInput.text);          
+            _behaviorRequesterById.CallRequestMethodById(_agentIdInput.text);          
         }
     }
 }

@@ -5,29 +5,30 @@ using UnityEngine.UI;
 
 namespace Genres
 {
-    internal class GenrePostView : MonoBehaviour
+    internal class GenrePutView : MonoBehaviour
     {
         [SerializeField] private TMP_InputField _genreName; 
+        [SerializeField] private TMP_InputField _genreId; 
         
         private GenreModel _genreModel;      
         private Button _button;                   
-        private IBehaviourPostRequester _behaviourPostRequester;
+        private IBehaviorPutRequester _behaviorPutRequester;
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _behaviourPostRequester = new BehaviourPostPostRequester();
+            _behaviorPutRequester = new BehaviorPutRequester();
             if (_genreName == null) FindObjectOfType<TMP_InputField>();     
             _button.onClick.AddListener(SendRequest);   
         }              
         private void SendRequest()
         {
-            _behaviourPostRequester.CallRequestMethod(GenreModel());          
+            _behaviorPutRequester.CallRequestMethod(_genreId.text, GenreModel());          
         }
 
         private object GenreModel()
         {
             _genreModel = new GenreModel(_genreName.text);
             return _genreModel;
-        }
+        } 
     }
 }
