@@ -9,11 +9,13 @@ namespace ServerSettings
 {
     public static class HttpClient
     {
+        public static async Task<T> Get<T>(string endPoint) => await SendRequest<T>(endPoint);
         public static async Task<T> GetId<T>(string endPoint, int id) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"));
 
         public static async Task<T> Post<T>(string endPoint, object payload) => await SendRequest<T>(endPoint, RequestType.POST, payload);
 
         public static async Task<T> Put<T>(string endPoint, int id, object payload) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.PUT, payload);
+        public static async Task<T> Delete<T>(string endPoint, int id, object payload) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.DELETE, payload);
 
         private static async Task<T> SendRequest<T>(string path,
             RequestType type = RequestType.GET,
@@ -69,5 +71,7 @@ public enum RequestType
 {
     GET = 0,
     POST = 1,
-    PUT = 2
+    PUT = 2,
+    DELETE = 3,
+    PATCH = 4
 }
