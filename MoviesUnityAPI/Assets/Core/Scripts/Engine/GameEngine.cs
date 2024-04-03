@@ -1,5 +1,3 @@
-using System;
-
 namespace ServerSettings
 {                     
     public class GameEngine : GenericSingleton<GameEngine>

@@ -9,9 +9,8 @@ using UnityEngine;
 namespace Genres
 {
     internal class BehaviorDeleteRequester : IBehaviorRequesterById
-    {
-        public event Action<string> OnGetResult;
-        public string Response { get; set; }
+    { 
+        public event Action<string> OnGetResult;    
 
         private const string _apiController = "genres";
         private IHttpRequester _httpRequester;
