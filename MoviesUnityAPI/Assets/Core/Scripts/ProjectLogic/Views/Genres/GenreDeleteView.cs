@@ -1,9 +1,10 @@
-﻿using Interfaces;
+﻿using Controllers;
+using Interfaces;
 using TMPro;
 using UnityEngine;     
 using UnityEngine.UI;
 
-namespace Genres
+namespace Views.Genres
 {
     internal class GenreDeleteView : MonoBehaviour
     {
@@ -12,6 +13,8 @@ namespace Genres
         
         private Button _button;                   
         private IBehaviorRequesterById _behaviorRequesterById;
+        
+        private const string _apiController = "genres";
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -22,7 +25,7 @@ namespace Genres
         {    
              //TODO CREATE A VALIDATION
             if(_IdInput.text != null)
-             _behaviorRequesterById.CallRequestMethodById(_IdInput.text);  
+             _behaviorRequesterById.CallRequestMethodById(_apiController, _IdInput.text);  
             else
                 Debug.Log("An AgentId is required");
         } 

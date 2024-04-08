@@ -5,18 +5,17 @@ using Interfaces;
 using ServerSettings;
 using SharedLibrary.Interfaces.Entities;     
 
-namespace Genres
+namespace Controllers
 {
-    internal class BehaviorPostPostRequester : IBehaviorPostRequester
+    internal class BehaviorPostRequester : IBehaviorPostRequester
     {
-        public event Action<string> OnGetResult;
-        
-        private const string _apiController = "genres";
+        public event Action<string> OnGetResult;       
+       
         private IHttpRequester _httpRequester;
-        public async Task CallRequestMethod(object genreModel)
+        public async Task CallRequestMethod(string apiController, object genreModel)
         {
             _httpRequester = new HttpClient();
-            await _httpRequester.Post<ICreateGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, _apiController),
+            await _httpRequester.Post<ICreateGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
               genreModel);          
             OnGetResult?.Invoke(_httpRequester.GetServerResponse);
         }                      

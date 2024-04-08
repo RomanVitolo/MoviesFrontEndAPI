@@ -5,7 +5,7 @@ namespace Interfaces
 {
     public interface IBehaviorPutRequester
     {
-        public Task CallRequestMethod(string typeId, object bodyClass);
+        public Task CallRequestMethod(string apiController, string typeId, object bodyClass);
         public event Action<string> OnGetResult;
     }         
 }

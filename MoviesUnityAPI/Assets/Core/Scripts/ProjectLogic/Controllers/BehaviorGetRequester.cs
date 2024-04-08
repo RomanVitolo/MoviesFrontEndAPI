@@ -5,26 +5,24 @@ using Interfaces;
 using ServerSettings;
 using SharedLibrary.Interfaces.Entities;       
 
-namespace Genres
+namespace Controllers
 {
     internal class BehaviorGetRequester : IBehaviorRequesterById
     {  
         public event Action<string> OnGetResult;     
         
-        private const string _apiController = "genres";
         private IHttpRequester _httpRequester;         
-        
-        public async Task CallRequestMethodById(string typeId)
+        public async Task CallRequestMethodById(string apiController, string typeId)
         {
             _httpRequester = new HttpClient();
             if (!string.IsNullOrEmpty(typeId))
             {   
-                await _httpRequester.GetId<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, _apiController), int.Parse(typeId));     
+                await _httpRequester.GetId<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController), int.Parse(typeId));     
                 OnGetResult?.Invoke(_httpRequester.GetServerResponse);    
             }    
             else
             {
-                await _httpRequester.Get<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, _apiController));            
+                await _httpRequester.Get<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController));            
                 OnGetResult?.Invoke(_httpRequester.GetServerResponse);     
             }                
         }       

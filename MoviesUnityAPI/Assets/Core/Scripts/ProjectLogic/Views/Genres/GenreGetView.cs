@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Controllers;
 using Interfaces;    
 using TMPro;
 using UnityEngine;               
 using UnityEngine.UI;         
 
-namespace Genres
+namespace Views.Genres
 {    
     internal class GenreGetView : MonoBehaviour
     {     
@@ -12,7 +13,9 @@ namespace Genres
         [SerializeField] private TextMeshProUGUI _responseText; 
         
         private Button _button;                   
-        private IBehaviorRequesterById _behaviorRequesterById;     
+        private IBehaviorRequesterById _behaviorRequesterById;   
+        
+        private const string _apiController = "genres";
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -34,7 +37,7 @@ namespace Genres
         private void SendRequest()
         {
             _button.interactable = false;    
-            _behaviorRequesterById.CallRequestMethodById(_IdInput.text);      
+            _behaviorRequesterById.CallRequestMethodById(_apiController, _IdInput.text);      
         }        
         private void WaitResponse(string showMessage) => _responseText.text = showMessage;
 

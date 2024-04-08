@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Genres
+namespace Models
 {
     [Serializable]
     internal class GenreModel

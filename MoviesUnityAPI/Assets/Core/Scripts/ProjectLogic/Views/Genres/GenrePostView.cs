@@ -2,8 +2,10 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Controllers;
+using Models;
 
-namespace Genres
+namespace Views.Genres
 {
     internal class GenrePostView : MonoBehaviour
     {
@@ -13,10 +15,12 @@ namespace Genres
         private GenreModel _genreModel;      
         private Button _button;                   
         private IBehaviorPostRequester _behaviorPostRequester;
+
+        private const string _apiController = "genres";
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _behaviorPostRequester = new BehaviorPostPostRequester();    
+            _behaviorPostRequester = new BehaviorPostRequester();    
         }
 
         private void OnEnable()
@@ -32,7 +36,7 @@ namespace Genres
         } 
         private void WaitResponse(string showMessage) => _responseText.text = showMessage;     
         private void GetResponse(string obj) => WaitResponse(obj);  
-        private void SendRequest() => _behaviorPostRequester.CallRequestMethod(GenreModel());    
+        private void SendRequest() => _behaviorPostRequester.CallRequestMethod( _apiController, GenreModel());    
         
         private object GenreModel()
         {

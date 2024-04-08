@@ -5,7 +5,7 @@ namespace Interfaces
 {
     public interface IBehaviorPostRequester
     {
-        public Task CallRequestMethod(object bodyClass);
+        public Task CallRequestMethod(string apiController, object bodyClass);
         public event Action<string> OnGetResult;
     }
 }
