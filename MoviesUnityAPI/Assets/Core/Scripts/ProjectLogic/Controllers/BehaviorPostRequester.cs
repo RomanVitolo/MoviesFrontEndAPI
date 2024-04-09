@@ -2,22 +2,21 @@
 using System.Threading.Tasks;
 using Assets.Core.Scripts.Interfaces;
 using Interfaces;
-using ServerSettings;
-using SharedLibrary.Interfaces.Entities;     
+using ServerSettings;       
 
 namespace Controllers
 {
     internal class BehaviorPostRequester : IBehaviorPostRequester
     {
-        public event Action<string> OnGetResult;       
+        public event Action<object> OnGetResult;       
        
         private IHttpRequester _httpRequester;
-        public async Task CallRequestMethod(string apiController, object genreModel)
+        public async Task CallRequestMethod<T>(string apiController, object genreModel)
         {
             _httpRequester = new HttpClient();
-            await _httpRequester.Post<ICreateGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
+            var request = await _httpRequester.Post<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
               genreModel);          
-            OnGetResult?.Invoke(_httpRequester.GetServerResponse);
+            OnGetResult?.Invoke(request);
         }                      
     }
 }

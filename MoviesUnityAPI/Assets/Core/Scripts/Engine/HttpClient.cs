@@ -9,8 +9,7 @@ using UnityEngine.Networking;
 namespace ServerSettings
 {
     public class HttpClient : IHttpRequester
-    {
-        public string GetServerResponse { get; set; }
+    {    
         public async Task<T> Get<T>(string endPoint) => await SendRequest<T>(endPoint);
         public async Task<T> GetId<T>(string endPoint, int id) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"));
 
@@ -25,12 +24,11 @@ namespace ServerSettings
         {   
             try
             {
-                var request = CreateRequest(path, type, data);   
-                await Task.CompletedTask; 
+                var request = CreateRequest(path, type, data);
+                await Task.CompletedTask;      
                 request.SendWebRequest();     
-                var result = JsonConvert.DeserializeObject<T>(request.downloadHandler.text);
-                await Task.Delay(1000);
-                GetServerResponse = request.downloadHandler.text; 
+                await Task.Delay(1000);   
+                var result = JsonConvert.DeserializeObject<T>(request.downloadHandler.text);      
                 return result;
             }
             catch (Exception ex)

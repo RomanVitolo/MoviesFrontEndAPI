@@ -5,7 +5,7 @@ namespace Interfaces
 {
     public interface IBehaviorRequesterById
     {
-        public Task CallRequestMethodById(string apiController, string idType = null);
-        public event Action<string> OnGetResult;  
-    }
+        public Task CallRequestMethodById<T>(string apiController, string idType = null);
+        public event Action<object> OnGetResult;  
+    }            
 }

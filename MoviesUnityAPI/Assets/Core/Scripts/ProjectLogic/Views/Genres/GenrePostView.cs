@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Controllers;
 using Models;
+using SharedLibrary.Interfaces.Entities;
 
 namespace Views.Genres
 {
@@ -12,7 +13,7 @@ namespace Views.Genres
         [SerializeField] private TMP_InputField _genreName; 
         [SerializeField] private TextMeshProUGUI _responseText;
         
-        private GenreModel _genreModel;      
+        private IGenreDTO _genrePostModel;      
         private Button _button;                   
         private IBehaviorPostRequester _behaviorPostRequester;
 
@@ -33,15 +34,20 @@ namespace Views.Genres
         {
             _button.onClick.RemoveAllListeners();
             _behaviorPostRequester.OnGetResult -= GetResponse;  
-        } 
-        private void WaitResponse(string showMessage) => _responseText.text = showMessage;     
-        private void GetResponse(string obj) => WaitResponse(obj);  
-        private void SendRequest() => _behaviorPostRequester.CallRequestMethod( _apiController, GenreModel());    
+        }
+
+        private void WaitResponse(object showMessage)
+        {
+            var genre = (GenreModel) showMessage;
+            _responseText.text = $"Id: {genre.Id}\n\nName: {genre.Name}";
+        }     
+        private void GetResponse(object obj) => WaitResponse(obj);  
+        private void SendRequest() => _behaviorPostRequester.CallRequestMethod<GenreModel>( _apiController, GenreModel());    
         
         private object GenreModel()
         {
-            _genreModel = new GenreModel(_genreName.text);
-            return _genreModel;
+            _genrePostModel = new GenreModel(_genreName.text);
+            return _genrePostModel;
         }
     }
 }

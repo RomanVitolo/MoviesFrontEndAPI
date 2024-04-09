@@ -9,21 +9,21 @@ namespace Controllers
 {
     internal class BehaviorGetRequester : IBehaviorRequesterById
     {  
-        public event Action<string> OnGetResult;     
+        public event Action<object> OnGetResult;     
         
         private IHttpRequester _httpRequester;         
-        public async Task CallRequestMethodById(string apiController, string typeId)
+        public async Task CallRequestMethodById<T>(string apiController, string typeId)
         {
             _httpRequester = new HttpClient();
             if (!string.IsNullOrEmpty(typeId))
             {   
-                await _httpRequester.GetId<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController), int.Parse(typeId));     
-                OnGetResult?.Invoke(_httpRequester.GetServerResponse);    
+                var request = await _httpRequester.GetId<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController), int.Parse(typeId));    
+                OnGetResult?.Invoke(request);    
             }    
             else
             {
-                await _httpRequester.Get<IGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController));            
-                OnGetResult?.Invoke(_httpRequester.GetServerResponse);     
+                var request = await _httpRequester.Get<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController));    
+                OnGetResult?.Invoke(request);     
             }                
         }       
     }

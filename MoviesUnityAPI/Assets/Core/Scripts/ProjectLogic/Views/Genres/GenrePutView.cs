@@ -34,10 +34,15 @@ namespace Views.Genres
         {
             _button.onClick.RemoveAllListeners();
             _behaviorPutRequester.OnGetResult -= GetResponse;   
-        } 
-        private void WaitResponse(string showMessage) => _responseText.text = showMessage;     
-        private void GetResponse(string obj) => WaitResponse(obj);        
-        private void SendRequest() => _behaviorPutRequester.CallRequestMethod(_apiController, _IdInput.text, GenreModel());  
+        }
+
+        private void WaitResponse(object showMessage)
+        {
+            var response = (MessageResponse) showMessage;
+            _responseText.text = response.Message;
+        }     
+        private void GetResponse(object obj) => WaitResponse(obj);        
+        private void SendRequest() => _behaviorPutRequester.CallRequestMethod<MessageResponse>(_apiController, _IdInput.text, GenreModel());  
         private object GenreModel()
         {
             _genreModel = new GenreModel(_genreName.text);

@@ -9,15 +9,15 @@ namespace Controllers
 {
     internal class BehaviorPutRequester : IBehaviorPutRequester
     {
-        public event Action<string> OnGetResult;          
+        public event Action<object> OnGetResult;          
       
         private IHttpRequester _httpRequester;
-        public async Task CallRequestMethod(string apiController, string typeId, object bodyClass)
+        public async Task CallRequestMethod<T>(string apiController, string typeId, object bodyClass)
         { 
             _httpRequester = new HttpClient();
-           await _httpRequester.Put<ICreateGenreDTO>(string.Concat(GameEngine.Instance.ServerEndpoint,
+           var request = await _httpRequester.Put<T>(string.Concat(GameEngine.Instance.ServerEndpoint,
                apiController), int.Parse(typeId), bodyClass);                   
-           OnGetResult?.Invoke("Entity Updated");
+           OnGetResult?.Invoke(request);
         }                        
     }
 }

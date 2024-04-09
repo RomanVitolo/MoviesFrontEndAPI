@@ -72,3 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 MoviesUnityAPI/Assets/Plugin/ServerLibrary/SharedLibrary.dll
 MoviesUnityAPI/Assets/Plugin/ServerLibrary/SharedLibrary.dll.meta
+MoviesUnityAPI/Assets/Plugin/ServerLibrary/SharedLibrary.dll

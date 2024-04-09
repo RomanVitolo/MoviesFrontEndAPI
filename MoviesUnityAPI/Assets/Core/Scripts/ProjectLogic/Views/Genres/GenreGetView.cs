@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using Controllers;
-using Interfaces;    
+﻿using Controllers;
+using Interfaces;
+using Models;
 using TMPro;
-using UnityEngine;               
+using UnityEngine;       
 using UnityEngine.UI;         
 
 namespace Views.Genres
 {    
     internal class GenreGetView : MonoBehaviour
     {     
-        [SerializeField] private TMP_InputField _IdInput; 
-        [SerializeField] private TextMeshProUGUI _responseText; 
+        [SerializeField] private TMP_InputField _idInput; 
+        [SerializeField] private TextMeshProUGUI _idText; 
+        [SerializeField] private TextMeshProUGUI _nameText; 
         
         private Button _button;                   
         private IBehaviorRequesterById _behaviorRequesterById;   
@@ -37,11 +38,17 @@ namespace Views.Genres
         private void SendRequest()
         {
             _button.interactable = false;    
-            _behaviorRequesterById.CallRequestMethodById(_apiController, _IdInput.text);      
-        }        
-        private void WaitResponse(string showMessage) => _responseText.text = showMessage;
+            _behaviorRequesterById.CallRequestMethodById<GenreModel>(_apiController, _idInput.text);      
+        }
 
-        private void GetResponse(string obj)
+        private void WaitResponse(object showMessage)
+        {
+            var responseModel = (GenreModel) showMessage;
+            _idText.text = "Id: " + responseModel.Id;
+            _nameText.text = "Name: " + responseModel.Name;
+        } 
+
+        private void GetResponse(object obj)
         {
             WaitResponse(obj);         
             _button.interactable = true;
