@@ -1,8 +1,10 @@
-﻿using SharedLibrary.Interfaces;
+﻿using System;
+using SharedLibrary.Interfaces;
 
 namespace Models
 {
-    public class MessageResponse : IMessageResponse
+    [Serializable]
+    internal class MessageResponse : IMessageResponse
     {
         public string Message { get; set; }
     }
