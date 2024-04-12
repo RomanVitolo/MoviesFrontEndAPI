@@ -15,7 +15,7 @@ namespace Controllers
         { 
             _httpRequester = new HttpClient();
            var request = await _httpRequester.Delete<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
-                int.Parse(typeId));           
+               GameEngine.Instance.BearerToken, int.Parse(typeId));           
            OnGetResult?.Invoke(request);
         }        
     }

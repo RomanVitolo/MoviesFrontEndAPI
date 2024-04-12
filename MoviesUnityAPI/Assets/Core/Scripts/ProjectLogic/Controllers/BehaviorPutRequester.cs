@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Assets.Core.Scripts.Interfaces;
 using Interfaces;
-using ServerSettings;
-using SharedLibrary.Interfaces.Entities;
+using ServerSettings;   
 
 namespace Controllers
 {
@@ -16,7 +15,7 @@ namespace Controllers
         { 
             _httpRequester = new HttpClient();
            var request = await _httpRequester.Put<T>(string.Concat(GameEngine.Instance.ServerEndpoint,
-               apiController), int.Parse(typeId), bodyClass);                   
+               apiController), GameEngine.Instance.BearerToken, int.Parse(typeId), bodyClass);                   
            OnGetResult?.Invoke(request);
         }                        
     }

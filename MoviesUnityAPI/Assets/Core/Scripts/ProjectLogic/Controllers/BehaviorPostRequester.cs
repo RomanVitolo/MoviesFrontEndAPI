@@ -15,7 +15,7 @@ namespace Controllers
         {
             _httpRequester = new HttpClient();
             var request = await _httpRequester.Post<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
-              genreModel);          
+                GameEngine.Instance.BearerToken, genreModel);          
             OnGetResult?.Invoke(request);
         }                      
     }

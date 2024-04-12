@@ -1,9 +1,10 @@
-﻿using Controllers;
+﻿using System;
+using Controllers;
 using Interfaces;
 using Models;
 using TMPro;
 using UnityEngine;       
-using UnityEngine.UI;         
+using UnityEngine.UI;               
 
 namespace Views.Genres
 {    
@@ -14,7 +15,7 @@ namespace Views.Genres
         [SerializeField] private TextMeshProUGUI _nameText; 
         
         private Button _button;                   
-        private IBehaviorRequesterById _behaviorRequesterById;   
+        private IBehaviorRequesterById _behaviorRequesterById;       
         
         private const string _apiController = "genres";
         private void Awake()
@@ -37,21 +38,42 @@ namespace Views.Genres
 
         private void SendRequest()
         {
-            _button.interactable = false;    
-            _behaviorRequesterById.CallRequestMethodById<GenreModel>(_apiController, _idInput.text);      
-        }
+            _button.interactable = false;
+            ClearText();
+            if (string.IsNullOrEmpty(_idInput.text))   
+                _behaviorRequesterById.CallRequestMethodById<GenreModel[]>(_apiController, _idInput.text);
+            else                                  
+            _behaviorRequesterById.CallRequestMethodById<GenreModel>(_apiController, _idInput.text);
+        }        
 
         private void WaitResponse(object showMessage)
         {
-            var responseModel = (GenreModel) showMessage;
-            _idText.text = "Id: " + responseModel.Id;
-            _nameText.text = "Name: " + responseModel.Name;
+            if (showMessage is GenreModel resultModel)
+            {
+                _idText.text = "\nId: " + resultModel.Id;
+                _nameText.text = "\n" + resultModel.Name; 
+            }
+            else
+            {
+                var responseModel = (GenreModel[]) showMessage;
+                foreach (var response in responseModel)
+                {
+                    _idText.text += "\nId: " + response.Id;
+                    _nameText.text += "\n" + response.Name; 
+                } 
+            }      
         } 
 
         private void GetResponse(object obj)
         {
             WaitResponse(obj);         
             _button.interactable = true;
-        }   
+        }            
+        
+        private void ClearText()
+        {       
+            _idText.text = string.Empty;
+            _nameText.text = string.Empty;
+        }
     }
-}
+}     

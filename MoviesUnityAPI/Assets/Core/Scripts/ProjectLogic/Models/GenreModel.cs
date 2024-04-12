@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using SharedLibrary.Interfaces.Entities;
 
 namespace Models
@@ -13,5 +14,5 @@ namespace Models
         {
             Name = name;
         }
-    }
+    }   
 }

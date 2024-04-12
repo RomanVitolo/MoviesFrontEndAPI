@@ -17,12 +17,14 @@ namespace Controllers
             _httpRequester = new HttpClient();
             if (!string.IsNullOrEmpty(typeId))
             {   
-                var request = await _httpRequester.GetId<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController), int.Parse(typeId));    
+                var request = await _httpRequester.GetId<T>(
+                    string.Concat(GameEngine.Instance.ServerEndpoint, apiController),
+                    GameEngine.Instance.BearerToken,int.Parse(typeId));    
                 OnGetResult?.Invoke(request);    
             }    
             else
             {
-                var request = await _httpRequester.Get<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController));    
+                var request = await _httpRequester.Get<T>(string.Concat(GameEngine.Instance.ServerEndpoint, apiController), GameEngine.Instance.BearerToken);    
                 OnGetResult?.Invoke(request);     
             }                
         }       

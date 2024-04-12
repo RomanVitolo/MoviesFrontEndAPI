@@ -10,21 +10,24 @@ namespace ServerSettings
 {
     public class HttpClient : IHttpRequester
     {    
-        public async Task<T> Get<T>(string endPoint) => await SendRequest<T>(endPoint);
-        public async Task<T> GetId<T>(string endPoint, int id) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"));
-
-        public async Task<T> Post<T>(string endPoint, object payload) => await SendRequest<T>(endPoint, RequestType.POST, payload);
-
-        public async Task<T> Put<T>(string endPoint, int id, object payload) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.PUT, payload);
-        public async Task<T> Delete<T>(string endPoint, int id) => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.DELETE);          
+        public async Task<T> Get<T>(string endPoint, string jwtToken) => 
+            await SendRequest<T>(endPoint, RequestType.GET, jwtToken, null);
+        public async Task<T> GetId<T>(string endPoint, string jwtToken, int id) => 
+            await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.GET, jwtToken, null);           
+        public async Task<T> Post<T>(string endPoint, string jwtToken, object payload) => 
+            await SendRequest<T>(endPoint, RequestType.POST, jwtToken, payload);      
+        public async Task<T> Put<T>(string endPoint, string jwtToken, int id, object payload) 
+            => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.PUT, jwtToken, payload);
+        public async Task<T> Delete<T>(string endPoint, string jwtToken, int id) 
+            => await SendRequest<T>(string.Concat(endPoint, $"/{id}"), RequestType.DELETE, jwtToken);         
 
         private async Task<T> SendRequest<T>(string path,
-            RequestType type = RequestType.GET,
+            RequestType type = RequestType.GET, string jwtToken = null,
             object data = null)
         {   
             try
             {
-                var request = CreateRequest(path, type, data);
+                var request = CreateRequest(path, type, data, jwtToken);
                 await Task.CompletedTask;      
                 request.SendWebRequest();     
                 await Task.Delay(1000);   
@@ -40,7 +43,7 @@ namespace ServerSettings
 
         private UnityWebRequest CreateRequest(string path,
             RequestType type = RequestType.GET,
-            object data = null)
+            object data = null, string jwtToken = null)
         {
             var request = new UnityWebRequest(path, type.ToString());
 
@@ -52,6 +55,9 @@ namespace ServerSettings
 
             request.downloadHandler = new DownloadHandlerBuffer();
             AttachHeader(request, "Content-Type", "application/json");
+            
+            if (!string.IsNullOrEmpty(jwtToken))      
+                AttachHeader(request, "Authorization", "Bearer " + jwtToken);     
 
             return request;
         }
