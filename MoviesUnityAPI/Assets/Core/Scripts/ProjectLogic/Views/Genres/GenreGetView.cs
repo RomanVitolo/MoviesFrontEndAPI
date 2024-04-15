@@ -66,8 +66,17 @@ namespace Views.Genres
 
         private void GetResponse(object obj)
         {
-            WaitResponse(obj);         
-            _button.interactable = true;
+            if (obj != null)
+            {
+                _button.interactable = true;
+                WaitResponse(obj);  
+            }
+            else
+            {
+                _button.interactable = true;
+                Debug.Log("Try again");
+                return;
+            }
         }            
         
         private void ClearText()
