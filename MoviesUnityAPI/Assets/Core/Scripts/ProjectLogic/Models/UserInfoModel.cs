@@ -4,12 +4,12 @@ using SharedLibrary.Interfaces.Entities;
 namespace Models
 {
     [Serializable]
-    internal class LoginModel : IUserInfo
+    internal class UserInfoModel : IUserInfo
     {
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public LoginModel(string email, string password)
+        public UserInfoModel(string email, string password)
         {
             Email = email;
             Password = password;

@@ -15,9 +15,11 @@ namespace Views.Genres
         [SerializeField] private TextMeshProUGUI _nameText; 
         
         private Button _button;                   
-        private IBehaviorRequesterById _behaviorRequesterById;       
-        
+        private IBehaviorRequesterById _behaviorRequesterById;
+
         private const string _apiController = "genres";
+
+        private string _saveText;
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -28,7 +30,7 @@ namespace Views.Genres
         {
             _button.onClick.AddListener(SendRequest);
             _behaviorRequesterById.OnGetResult += GetResponse;
-        }  
+        }
 
         private void OnDisable()
         {
@@ -39,11 +41,11 @@ namespace Views.Genres
         private void SendRequest()
         {
             _button.interactable = false;
-            ClearText();
             if (string.IsNullOrEmpty(_idInput.text))   
                 _behaviorRequesterById.CallRequestMethodById<GenreModel[]>(_apiController, _idInput.text);
-            else                                  
-            _behaviorRequesterById.CallRequestMethodById<GenreModel>(_apiController, _idInput.text);
+            else 
+                _behaviorRequesterById.CallRequestMethodById<GenreModel>(_apiController, _idInput.text);
+            ClearUI();
         }        
 
         private void WaitResponse(object showMessage)
@@ -79,8 +81,9 @@ namespace Views.Genres
             }
         }            
         
-        private void ClearText()
-        {       
+        private void ClearUI()
+        {    
+            _idInput.text = string.Empty;
             _idText.text = string.Empty;
             _nameText.text = string.Empty;
         }

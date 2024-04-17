@@ -25,10 +25,12 @@ namespace Views.Genres
         private void SendRequest()
         {    
              //TODO CREATE A VALIDATION
-            if(_IdInput.text != null)
-             _behaviorRequesterById.CallRequestMethodById<MessageResponse>(_apiController, _IdInput.text);  
-            else
-                Debug.Log("An AgentId is required");
+             if(_IdInput.text != null) 
+                 _behaviorRequesterById.CallRequestMethodById<MessageResponse>(_apiController, _IdInput.text);
+             else
+                 Debug.Log("An AgentId is required");
+             
+             ClearUI();
         } 
         
         private void OnEnable() =>  _behaviorRequesterById.OnGetResult += GetResponse;  
@@ -40,5 +42,11 @@ namespace Views.Genres
             _responseText.text = response.Message;   
         }    
         private void GetResponse(object obj) => WaitResponse(obj);     
+        
+        private void ClearUI()
+        {       
+            _IdInput.text = string.Empty;
+            _responseText.text = string.Empty;
+        }
     }   
 }

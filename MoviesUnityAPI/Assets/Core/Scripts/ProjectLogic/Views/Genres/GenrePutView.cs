@@ -41,12 +41,24 @@ namespace Views.Genres
             var response = (MessageResponse) showMessage;
             _responseText.text = response.Message;
         }     
-        private void GetResponse(object obj) => WaitResponse(obj);        
-        private void SendRequest() => _behaviorPutRequester.CallRequestMethod<MessageResponse>(_apiController, _IdInput.text, GenreModel());  
+        private void GetResponse(object obj) => WaitResponse(obj);
+
+        private void SendRequest()
+        {
+            _behaviorPutRequester.CallRequestMethod<MessageResponse>(_apiController, _IdInput.text, GenreModel());
+            ClearUI(); 
+        } 
         private object GenreModel()
         {
             _genreModel = new GenreModel(_genreName.text);
             return _genreModel;
         } 
+        
+        private void ClearUI()
+        {
+            _genreName.text = string.Empty;
+            _IdInput.text = string.Empty;
+            _responseText.text = string.Empty;
+        }
     }
 }
