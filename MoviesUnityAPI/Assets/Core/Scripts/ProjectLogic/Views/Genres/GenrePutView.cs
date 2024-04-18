@@ -38,14 +38,14 @@ namespace Views.Genres
 
         private void WaitResponse(object showMessage)
         {
-            var response = (MessageResponse) showMessage;
+            var response = (MessageResponseModel) showMessage;
             _responseText.text = response.Message;
         }     
         private void GetResponse(object obj) => WaitResponse(obj);
 
         private void SendRequest()
         {
-            _behaviorPutRequester.CallRequestMethod<MessageResponse>(_apiController, _IdInput.text, GenreModel());
+            _behaviorPutRequester.CallRequestMethod<MessageResponseModel>(_apiController, _IdInput.text, GenreModel());
             ClearUI(); 
         } 
         private object GenreModel()

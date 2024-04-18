@@ -26,7 +26,7 @@ namespace Views.Genres
         {    
              //TODO CREATE A VALIDATION
              if(_IdInput.text != null) 
-                 _behaviorRequesterById.CallRequestMethodById<MessageResponse>(_apiController, _IdInput.text);
+                 _behaviorRequesterById.CallRequestMethodById<MessageResponseModel>(_apiController, _IdInput.text);
              else
                  Debug.Log("An AgentId is required");
              
@@ -38,7 +38,7 @@ namespace Views.Genres
 
         private void WaitResponse(object showMessage)
         {
-            var response = (MessageResponse) showMessage;
+            var response = (MessageResponseModel) showMessage;
             _responseText.text = response.Message;   
         }    
         private void GetResponse(object obj) => WaitResponse(obj);     

@@ -4,7 +4,7 @@ using SharedLibrary.Interfaces;
 namespace Models
 {
     [Serializable]
-    internal class MessageResponse : IMessageResponse
+    internal class MessageResponseModel : IMessageResponse
     {
         public string Message { get; set; }
     }
